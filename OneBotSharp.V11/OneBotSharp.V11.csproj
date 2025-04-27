@@ -4,6 +4,30 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>OneBotSharp.V11</Title>
+    <Version>0.0.1</Version>
+    <Authors>YangYuqian</Authors>
+    <PackageProjectUrl>https://github.com/gdr2333/OneBotSharp.V11</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/gdr2333/OneBotSharp.V11</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="OneBotSharp.V11.Utils" />
+    <Using Include="System.Text" />
+    <Using Include="System.Text.Json" />
+    <Using Include="System.Text.Json.Nodes" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Types\Message\Payload\" />
+  </ItemGroup>
 
 </Project>
