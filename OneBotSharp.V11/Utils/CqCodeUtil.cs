@@ -15,13 +15,17 @@ internal static class CqCodeUtil
     public static string CqBoolEncoode(bool val) =>
         val ? "1" : "0";
 
-    private static string CqCodePropValueEncode(string value) => value.Replace("&", "&amp;").Replace("[", "&#91;").Replace("]", "&#93;").Replace(",", "&#44;");
+    private static string CqCodePropValueEncode(string value) => 
+        value.Replace("&", "&amp;").Replace("[", "&#91;").Replace("]", "&#93;").Replace(",", "&#44;");
 
-    private static string CqCodePropValueDecode(string value) => value.Replace("&amp;", "&").Replace("&#91;", "[").Replace("&#93;", "]").Replace("&#44;", ",");
+    private static string CqCodePropValueDecode(string value) => 
+        value.Replace("&amp;", "&").Replace("&#91;", "[").Replace("&#93;", "]").Replace("&#44;", ",");
 
-    internal static string CqCodeTextEncode(string value) => value.Replace("&", "&amp;").Replace("[", "&#91;").Replace("]", "&#93;");
+    internal static string CqCodeTextEncode(string value) => 
+        value.Replace("&", "&amp;").Replace("[", "&#91;").Replace("]", "&#93;");
 
-    internal static string CqCodeTextDecode(string value) => value.Replace("&amp;", "&").Replace("&#91;", "[").Replace("&#93;", "]");
+    internal static string CqCodeTextDecode(string value) => 
+        value.Replace("&amp;", "&").Replace("&#91;", "[").Replace("&#93;", "]");
 
     public static CqCode CqCodeDecode(string val)
     {
@@ -67,5 +71,36 @@ internal static class CqCodeUtil
         }
         sb[^1] = ']';
         return sb.ToString();
+    }
+
+    public static CqCode JsonPayloadToCqCode(string type, JsonNode payload)
+    {
+        Dictionary<string, string> data = [];
+        foreach(var i in payload.AsObject())
+            switch (i.Value?.GetValueKind())
+            {
+                case null:
+                case JsonValueKind.Array:
+                case JsonValueKind.Object:
+                    continue;
+                case JsonValueKind.False:
+                    data.Add(i.Key, "false");
+                    continue;
+                case JsonValueKind.Null:
+                case JsonValueKind.Undefined:
+                    data.Add(i.Key, "");
+                    continue;
+                case JsonValueKind.Number:
+                    // JSON SUCKS
+                    data.Add(i.Key, i.Value.GetValue<double>().ToString(MiscUtil.DefaultFormat));
+                    continue;
+                case JsonValueKind.String:
+                    data.Add(i.Key, i.Value.GetValue<string>());
+                    continue;
+                case JsonValueKind.True:
+                    data.Add(i.Key, "true");
+                    continue;
+            }
+        return new(type, data);
     }
 }

@@ -1,0 +1,137 @@
+﻿using OneBotSharp.V11.Types.Message.Base;
+using OneBotSharp.V11.Types.Message.Payload;
+
+namespace OneBotSharp.V11.Types.Message;
+
+/// <summary>
+/// 图片消息段
+/// </summary>
+public class ImageSegment : Segment
+{
+    /// <inheritdoc/>
+    [JsonInclude, JsonPropertyName("data")]
+    public override string Type => "image";
+
+    /// <inheritdoc/>
+    [JsonInclude, JsonPropertyName("data")]
+    public override JsonNode Payload => _payload;
+
+    /// <summary>
+    /// 接收的时候是文件名，发送的时候是文件地址或者文件名
+    /// </summary>
+    [JsonIgnore]
+    public string FileName { get; private init; }
+
+    /// <summary>
+    /// 是否为闪照
+    /// </summary>
+    [JsonIgnore]
+    public bool IsFlash { get; private init; }
+
+    /// <summary>
+    /// 图片URL（仅限接收）
+    /// </summary>
+    [JsonIgnore]
+    [Obsolete("使用GetImageAsync来获取图片内容。")]
+    public Uri? Url { get; private init; }
+
+    /// <summary>
+    /// 是否使用缓存（仅限发送）
+    /// </summary>
+    [JsonIgnore]
+    public bool UseCahce { get; private init; }
+
+    /// <summary>
+    /// 是否使用系统代理（仅限发送）
+    /// </summary>
+    [JsonIgnore]
+    public bool UseProxy { get; private init; }
+
+    /// <summary>
+    /// 超时时间（仅限发送）
+    /// </summary>
+    [JsonIgnore]
+    public int? Timeout { get; private init; }
+
+    /// <summary>
+    /// 异步获取图片内容（仅限接收）
+    /// </summary>
+    /// <returns>图片内容（当不可用时返回null）</returns>
+    public async Task<byte[]?> GetImageAsync() =>
+        _getImage is null ? null : await _getImage();
+
+    private readonly JsonNode _payload;
+
+    private readonly Func<Task<byte[]>>? _getImage;
+
+    /// <summary>
+    /// 创建新的图片消息段
+    /// </summary>
+    /// <param name="fileName">图片名或URL</param>
+    /// <param name="isFlash">是否为闪照</param>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <param name="useProxy">是否使用系统代理</param>
+    /// <param name="timeout">超时时间</param>
+    public ImageSegment(string fileName, bool isFlash = false, bool useCache = Defaults.CqUseCacheDefault, bool useProxy = Defaults.CqUseProxyDefault, int? timeout = null)
+    {
+        FileName = fileName;
+        IsFlash = isFlash;
+#pragma warning disable CS0618
+        Url = null;
+#pragma warning restore CS0618
+        UseCahce = useCache;
+        UseProxy = useProxy;
+        Timeout = timeout;
+        var payload = new JsonObject()
+        {
+            {"file", fileName },
+        };
+        if (isFlash)
+            payload.Add("type", "flash");
+        if (useCache != Defaults.CqUseCacheDefault)
+            payload.Add("cache", CqCodeUtil.CqBoolEncoode(useCache));
+        if (useProxy != Defaults.CqUseProxyDefault)
+            payload.Add("proxy", CqCodeUtil.CqBoolEncoode(useProxy));
+        if (timeout is not null)
+            payload.Add("timeout", timeout);
+        _payload = payload;
+        _getImage = null;
+    }
+
+    /// <summary>
+    /// 创建新的图片消息段
+    /// </summary>
+    /// <param name="fileUrl">图片URL</param>
+    /// <param name="isFlash">是否为闪照</param>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <param name="useProxy">是否使用系统代理</param>
+    /// <param name="timeout">超时时间</param>
+    public ImageSegment(Uri fileUrl, bool isFlash = false, bool useCache = Defaults.CqUseCacheDefault, bool useProxy = Defaults.CqUseProxyDefault, int? timeout = null)
+        : this(fileUrl.AbsoluteUri, isFlash, useCache, useProxy, timeout)
+    {
+    }
+
+    /// <summary>
+    /// 创建新的图片消息段
+    /// </summary>
+    /// <param name="file">图片内容</param>
+    /// <param name="isFlash">是否为闪照</param>
+    public ImageSegment(byte[] file, bool isFlash = false)
+        : this($"base64://{Convert.ToBase64String(file)}", isFlash)
+    {
+    }
+
+    internal ImageSegment(ImagePayload payload, JsonNode payloadNode, Func<Task<byte[]>> getImageFunc)
+    {
+        FileName = payload.File;
+        IsFlash = payload.ImageType == "flash";
+#pragma warning disable CS0618
+        Url = payload.Url;
+#pragma warning restore CS0618
+        UseCahce = Defaults.CqUseCacheDefault;
+        UseProxy = Defaults.CqUseProxyDefault;
+        Timeout = null;
+        _payload = payloadNode;
+        _getImage = getImageFunc;
+    }
+}
