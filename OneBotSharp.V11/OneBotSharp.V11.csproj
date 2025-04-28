@@ -24,10 +24,7 @@
     <Using Include="System.Text" />
     <Using Include="System.Text.Json" />
     <Using Include="System.Text.Json.Nodes" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Types\Message\Payload\" />
+    <Using Include="System.Text.Json.Serialization" />
   </ItemGroup>
 
 </Project>

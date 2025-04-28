@@ -1,0 +1,15 @@
+﻿using OneBotSharp.V11.Types.Message.Base;
+
+namespace OneBotSharp.V11.Types.Message.Payload;
+
+internal struct TextPayload
+{
+    [JsonInclude, JsonRequired, JsonPropertyName("text")]
+    public string Text;
+
+    public static TextPayload Create(CqCode code) =>
+        new()
+        {
+            Text = code.Payload["text"]
+        };
+}
