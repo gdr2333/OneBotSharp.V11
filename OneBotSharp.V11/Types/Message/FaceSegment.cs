@@ -4,43 +4,43 @@ using OneBotSharp.V11.Types.Message.Payload;
 namespace OneBotSharp.V11.Types.Message;
 
 /// <summary>
-/// 文本消息段
+/// 表情消息段
 /// </summary>
-public class TextSegment : Segment
+public class FaceSegment : Segment
 {
     /// <inheritdoc/>
     [JsonInclude, JsonPropertyName("type")]
-    public override string Type => "text";
+    public override string Type => "face";
 
     /// <inheritdoc/>
     [JsonInclude, JsonPropertyName("data")]
     public override JsonNode Payload => _payload;
 
     /// <summary>
-    /// 消息文本
+    /// 表情ID
     /// </summary>
     [JsonIgnore]
-    public string Text { get; private init; }
+    public long Id { get; private init; }
 
     [JsonIgnore]
     private readonly JsonNode _payload;
 
     /// <summary>
-    /// 创建一个包含指定文本的消息段
+    /// 创建一个指定ID的表情消息段
     /// </summary>
-    /// <param name="text">消息段内容</param>
-    public TextSegment(string text)
+    /// <param name="id">表情ID</param>
+    public FaceSegment(long id)
     {
-        Text = text;
+        Id = id;
         _payload = new JsonObject()
         {
-            { "text", Text }
+            { "id", Id }
         };
     }
 
-    internal TextSegment(TextPayload payload, JsonNode? payloadNode = null)
+    internal FaceSegment(IdOnlyPayload payload, JsonNode? payloadNode = null)
     {
-        Text = payload.Text;
+        Id = payload.Id;
         _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

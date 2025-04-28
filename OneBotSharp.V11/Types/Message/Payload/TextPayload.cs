@@ -2,7 +2,7 @@
 
 namespace OneBotSharp.V11.Types.Message.Payload;
 
-internal struct TextPayload
+internal struct TextPayload : IPayload<TextPayload>
 {
     [JsonInclude, JsonRequired, JsonPropertyName("text")]
     public string Text;
