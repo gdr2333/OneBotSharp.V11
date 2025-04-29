@@ -5,7 +5,7 @@ internal class CqIntConverter : JsonConverter<int>
     public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
         reader.TokenType switch
         {
-            JsonTokenType.String => int.Parse(reader.GetString(), MiscUtil.DefaultFormat),
+            JsonTokenType.String => int.Parse(reader.GetString(), Defaults.DefaultFormat),
             JsonTokenType.Number => reader.GetInt32(),
             JsonTokenType.True => 1,
             JsonTokenType.False => 0,
@@ -13,5 +13,5 @@ internal class CqIntConverter : JsonConverter<int>
         };
 
     public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options) =>
-        writer.WriteStringValue(value.ToString(MiscUtil.DefaultFormat));
+        writer.WriteStringValue(value.ToString(Defaults.DefaultFormat));
 }

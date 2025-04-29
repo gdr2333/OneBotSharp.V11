@@ -45,7 +45,7 @@ public class VideoSegment : Segment
     public int? Timeout { get; private init; }
 
     [JsonIgnore]
-    private JsonNode _payload;
+    private readonly JsonNode _payload;
 
     /// <summary>
     /// 用指定字符串创建一个视频消息段

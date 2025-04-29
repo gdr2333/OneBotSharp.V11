@@ -5,7 +5,7 @@ namespace OneBotSharp.V11.Utils;
 internal static class CqCodeUtil
 {
     public static bool CqBoolDecode(string val) =>
-        val.ToLower(MiscUtil.DefaultFormat) switch
+        val.ToLower(Defaults.DefaultFormat) switch
         {
             "1" or "true" or "yes" => true,
             "0" or "false" or "no" => false,
@@ -92,7 +92,7 @@ internal static class CqCodeUtil
                     continue;
                 case JsonValueKind.Number:
                     // JSON SUCKS
-                    data.Add(i.Key, i.Value.GetValue<double>().ToString(MiscUtil.DefaultFormat));
+                    data.Add(i.Key, i.Value.GetValue<double>().ToString(Defaults.DefaultFormat));
                     continue;
                 case JsonValueKind.String:
                     data.Add(i.Key, i.Value.GetValue<string>());

@@ -11,6 +11,6 @@ internal struct IdOnlyPayload : IPayload<IdOnlyPayload>
     public static IdOnlyPayload Create(CqCode code) =>
         new()
         {
-            Id = long.Parse(code.Payload["id"], MiscUtil.DefaultFormat)
+            Id = long.Parse(code.Payload["id"], Defaults.DefaultFormat)
         };
 }
