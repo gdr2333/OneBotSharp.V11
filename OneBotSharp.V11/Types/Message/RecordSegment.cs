@@ -61,6 +61,15 @@ public class RecordSegment : Segment
     [JsonIgnore]
     private readonly JsonNode _payload;
 
+    /// <summary>
+    /// 用指定字符串创建一个录音消息段
+    /// </summary>
+    /// <param name="file">文件名或URL</param>
+    /// <param name="useMagic">是否变声</param>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <param name="useProxy">是否使用系统代理</param>
+    /// <param name="timeout">超时时间</param>
+    /// <param name="fileAddress">额外的本地文件地址</param>
     public RecordSegment(string file, bool useMagic = false, bool useCache = Defaults.CqUseCacheDefault, bool useProxy = Defaults.CqUseProxyDefault, int? timeout = null, string? fileAddress = null)
     {
         File = file;
@@ -85,11 +94,25 @@ public class RecordSegment : Segment
         _payload = payload;
     }
 
+    /// <summary>
+    /// 用指定URL创建一个录音消息段
+    /// </summary>
+    /// <param name="fileUrl">文件URL</param>
+    /// <param name="useMagic">是否变声</param>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <param name="useProxy">是否使用系统代理</param>
+    /// <param name="timeout">超时时间</param>
+    /// <param name="fileAddress">额外的本地文件地址</param>
     public RecordSegment(Uri fileUrl, bool useMagic = false, bool useCache = Defaults.CqUseCacheDefault, bool useProxy = Defaults.CqUseProxyDefault, int? timeout = null, string? fileAddress = null)
         : this(fileUrl.AbsoluteUri, useMagic, useCache, useProxy, timeout, fileAddress)
     {
     }
 
+    /// <summary>
+    /// 用指定二进制内容创建一个录音消息段
+    /// </summary>
+    /// <param name="file">二进制内容</param>
+    /// <param name="useMagic">是否变声</param>
     public RecordSegment(byte[] file, bool useMagic = false)
         : this($"base64://{Convert.ToBase64String(file)}", useMagic)
     {
