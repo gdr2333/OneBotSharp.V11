@@ -15,13 +15,13 @@ internal struct ImagePayload() : IPayload<ImagePayload>
     [JsonInclude, JsonPropertyName("url")]
     public Uri? Url;
 
-    [JsonInclude, JsonConverter(typeof(CqBoolConverter))]
+    [JsonInclude, JsonPropertyName("cache"), JsonConverter(typeof(CqBoolConverter))]
     public bool UseCache = Defaults.CqUseCacheDefault;
 
-    [JsonInclude, JsonConverter(typeof(CqBoolConverter))]
+    [JsonInclude, JsonPropertyName("proxy"), JsonConverter(typeof(CqBoolConverter))]
     public bool UseProxy = Defaults.CqUseProxyDefault;
 
-    [JsonInclude, JsonConverter(typeof(CqIntConverter))]
+    [JsonInclude, JsonPropertyName("timeout"), JsonConverter(typeof(CqIntConverter))]
     public int? TimeOut = null;
 
     public static ImagePayload Create(CqCode code) =>

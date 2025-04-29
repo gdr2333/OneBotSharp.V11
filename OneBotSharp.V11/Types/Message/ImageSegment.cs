@@ -39,7 +39,7 @@ public class ImageSegment : Segment
     /// 是否使用缓存（仅限发送）
     /// </summary>
     [JsonIgnore]
-    public bool UseCahce { get; private init; }
+    public bool UseCache { get; private init; }
 
     /// <summary>
     /// 是否使用系统代理（仅限发送）
@@ -79,7 +79,7 @@ public class ImageSegment : Segment
 #pragma warning disable CS0618
         Url = null;
 #pragma warning restore CS0618
-        UseCahce = useCache;
+        UseCache = useCache;
         UseProxy = useProxy;
         Timeout = timeout;
         var payload = new JsonObject()
@@ -128,7 +128,7 @@ public class ImageSegment : Segment
 #pragma warning disable CS0618
         Url = payload.Url;
 #pragma warning restore CS0618
-        UseCahce = Defaults.CqUseCacheDefault;
+        UseCache = Defaults.CqUseCacheDefault;
         UseProxy = Defaults.CqUseProxyDefault;
         Timeout = null;
         _payload = payloadNode;
