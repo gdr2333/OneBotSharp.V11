@@ -7,7 +7,6 @@ namespace OneBotSharp.V11.Types.Message;
 /// </summary>
 public class AnonymousSegment : Segment
 {
-    // 因为收不到这下连个内部的payload都无了
     /// <inheritdoc/>
     [JsonInclude, JsonPropertyName("type")]
     public override string Type => "anonymous";
