@@ -14,17 +14,11 @@ internal struct PokePayload : IPayload<PokePayload>
     [JsonInclude, JsonPropertyName("name")]
     public string? Name;
 
-    public static PokePayload Create(CqCode code)
-    {
-        var res = new PokePayload
+    public static PokePayload Create(CqCode code) =>
+        new()
         {
             Type = int.Parse(code.Payload["type"], Defaults.DefaultFormat),
-            Id = int.Parse(code.Payload["id"], Defaults.DefaultFormat)
+            Id = int.Parse(code.Payload["id"], Defaults.DefaultFormat),
+            Name = code.Payload.TryGetValue("name", out var name) ? name : null
         };
-        if (code.Payload.TryGetValue("name", out var name))
-            res.Name = name;
-        else
-            res.Name = null;
-        return res;
-    }
 }
