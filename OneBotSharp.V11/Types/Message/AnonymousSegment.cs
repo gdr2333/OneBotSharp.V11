@@ -20,7 +20,7 @@ public class AnonymousSegment : Segment
     /// </summary>
     public bool Ignore { get; private init; }
 
-    private JsonNode _payload;
+    private readonly JsonNode _payload;
 
     /// <summary>
     /// 新建一个匿名消息段
