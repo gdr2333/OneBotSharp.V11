@@ -1,7 +1,7 @@
 ﻿using OneBotSharp.V11.Types.Message.Base;
 using OneBotSharp.V11.Types.Message.Payload;
 
-namespace OneBotSharp.V11.Types.Internal;
+namespace OneBotSharp.V11.Types.Message;
 
 /// <summary>
 /// 连接分享消息段
