@@ -32,13 +32,13 @@ public class LocationSegment : Segment
     /// （可选）标题
     /// </summary>
     [JsonIgnore]
-    public string? Title;
+    public string? Title { get; private init; }
 
     /// <summary>
     /// （可选）描述
     /// </summary>
     [JsonIgnore]
-    public string? Content;
+    public string? Content { get; private init; }
 
     [JsonIgnore]
     private readonly JsonNode _payload;
