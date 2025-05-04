@@ -36,9 +36,9 @@ public class JsonSegment : Segment
         };
     }
 
-    internal JsonSegment(DataOnlyPayload payload, JsonNode payloadNode)
+    internal JsonSegment(DataOnlyPayload payload, JsonNode? payloadNode)
     {
         Data = JsonNode.Parse(payload.Data) ?? throw new JsonException("JSON解析失败！");
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

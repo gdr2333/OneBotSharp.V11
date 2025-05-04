@@ -38,9 +38,9 @@ public class ReplySegment : Segment
         };
     }
 
-    internal ReplySegment(IdOnlyPayload payload, JsonNode payloadNode)
+    internal ReplySegment(IdOnlyPayload payload, JsonNode? payloadNode)
     {
         Id = payload.Id;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

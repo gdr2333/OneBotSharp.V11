@@ -108,16 +108,14 @@ public class ImageSegment : Segment
     {
     }
 
-    internal ImageSegment(ImagePayload payload, JsonNode payloadNode)
+    internal ImageSegment(ImagePayload payload, JsonNode? payloadNode)
     {
         FileName = payload.File;
         IsFlash = payload.ImageType == "flash";
-#pragma warning disable CS0618
         Url = payload.Url;
-#pragma warning restore CS0618
         UseCache = Defaults.CqUseCacheDefault;
         UseProxy = Defaults.CqUseProxyDefault;
         Timeout = null;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

@@ -16,7 +16,7 @@ public class NeteaseMusicShareSegment : PredefinedMusicShareSegmentBase
     {
     }
 
-    internal NeteaseMusicShareSegment(MusicSharePayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal NeteaseMusicShareSegment(MusicSharePayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

@@ -77,13 +77,13 @@ public class CostomMusicShareSegment : MusicShareSegmentBase
         _payload = payload;
     }
 
-    internal CostomMusicShareSegment(CustomMusicSharePayload payload, JsonNode payloadNode)
+    internal CostomMusicShareSegment(CustomMusicSharePayload payload, JsonNode? payloadNode)
     {
         ToUrl = payload.ToUrl;
         AudioUrl = payload.AudioUrl;
         Title = payload.Title;
         Content = payload.Content;
         ImageUrl = payload.ImageUrl;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

@@ -54,11 +54,11 @@ public class PokeSegment : Segment
         };
     }
 
-    internal PokeSegment(PokePayload payload, JsonNode payloadNode)
+    internal PokeSegment(PokePayload payload, JsonNode? payloadNode)
     {
         PokeType = payload.Type;
         PokeId = payload.Id;
         Name = payload.Name;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

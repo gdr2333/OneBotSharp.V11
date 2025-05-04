@@ -16,7 +16,7 @@ public class QqMusicShareSegment : PredefinedMusicShareSegmentBase
     {
     }
 
-    internal QqMusicShareSegment(MusicSharePayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal QqMusicShareSegment(MusicSharePayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

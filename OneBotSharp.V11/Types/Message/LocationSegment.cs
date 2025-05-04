@@ -68,12 +68,12 @@ public class LocationSegment : Segment
         _payload = payload;
     }
 
-    internal LocationSegment(LocationPayload payload, JsonNode payloadNode)
+    internal LocationSegment(LocationPayload payload, JsonNode? payloadNode)
     {
         Latitude = payload.Latitude;
         Longitude = payload.Longitude;
         Title = payload.Title;
         Content = payload.Content;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

@@ -16,7 +16,7 @@ public class ContactGroupSegment : ContactSegmentBase
     {
     }
 
-    internal ContactGroupSegment(ContactPayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal ContactGroupSegment(ContactPayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

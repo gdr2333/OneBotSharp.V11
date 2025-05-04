@@ -40,11 +40,11 @@ public class XmlSegment : Segment
         };
     }
 
-    internal XmlSegment(DataOnlyPayload payload, JsonNode payloadNode)
+    internal XmlSegment(DataOnlyPayload payload, JsonNode? payloadNode)
     {
         using StringReader reader = new(payload.Data);
         Data = new();
         Data.Load(reader);
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

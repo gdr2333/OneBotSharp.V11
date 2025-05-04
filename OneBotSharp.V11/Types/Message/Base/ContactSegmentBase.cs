@@ -47,10 +47,10 @@ public abstract class ContactSegmentBase : Segment
         };
     }
 
-    internal ContactSegmentBase(ContactPayload payload, JsonNode payloadNode)
+    internal ContactSegmentBase(ContactPayload payload, JsonNode? payloadNode)
     {
         ContactType = payload.Type;
         ContactId = payload.Id;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

@@ -29,8 +29,8 @@ public class RpsSegment : Segment
     {
     }
 
-    internal RpsSegment(JsonNode payloadNode)
+    internal RpsSegment(JsonNode? payloadNode)
     {
-        _payload = payloadNode;
+        _payload = payloadNode ?? new JsonObject();
     }
 }

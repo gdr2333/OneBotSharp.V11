@@ -61,12 +61,12 @@ public class ShareSegment : Segment
         _payload = payload;
     }
 
-    internal ShareSegment(SharePayload payload, JsonNode payloadNode)
+    internal ShareSegment(SharePayload payload, JsonNode? payloadNode)
     {
         Url = payload.Url;
         Title = payload.Title;
         Content = payload.Content;
         ImageUrl = payload.ImageUrl;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

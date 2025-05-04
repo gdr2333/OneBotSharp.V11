@@ -58,7 +58,7 @@ public class AtSegment : Segment
         };
     }
 
-    internal AtSegment(AtPayload payload, JsonNode payloadNode)
+    internal AtSegment(AtPayload payload, JsonNode? payloadNode)
     {
         if (payload.QQ == "all")
         {
@@ -70,6 +70,6 @@ public class AtSegment : Segment
             AtAll = false;
             Uid = long.Parse(payload.QQ, Defaults.DefaultFormat);
         }
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

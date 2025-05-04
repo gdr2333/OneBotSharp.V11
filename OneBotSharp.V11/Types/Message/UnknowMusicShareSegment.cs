@@ -19,7 +19,7 @@ public class UnknowMusicShareSegment : PredefinedMusicShareSegmentBase
     {
     }
 
-    internal UnknowMusicShareSegment(MusicSharePayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal UnknowMusicShareSegment(MusicSharePayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

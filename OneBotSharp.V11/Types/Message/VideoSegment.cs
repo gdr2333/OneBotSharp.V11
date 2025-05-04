@@ -96,13 +96,13 @@ public class VideoSegment : Segment
     }
 
 
-    internal VideoSegment(VideoPayload payload, JsonNode payloadNode)
+    internal VideoSegment(VideoPayload payload, JsonNode? payloadNode)
     {
         FileName = payload.File;
         Url = payload.Url;
         UseCache = payload.UseCache;
         UseProxy = payload.UseProxy;
         Timeout = payload.TimeOut;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

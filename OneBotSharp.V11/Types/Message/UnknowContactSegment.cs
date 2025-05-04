@@ -17,7 +17,7 @@ public class UnknowContactSegment : ContactSegmentBase
     {
     }
 
-    internal UnknowContactSegment(ContactPayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal UnknowContactSegment(ContactPayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

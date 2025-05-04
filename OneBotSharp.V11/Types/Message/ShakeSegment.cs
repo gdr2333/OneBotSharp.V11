@@ -29,8 +29,8 @@ public class ShakeSegment : Segment
     {
     }
 
-    internal ShakeSegment(JsonNode payloadNode)
+    internal ShakeSegment(JsonNode? payloadNode)
     {
-        _payload = payloadNode;
+        _payload = payloadNode ?? new JsonObject();
     }
 }

@@ -17,7 +17,7 @@ public class XiamiMusicShareSegment : PredefinedMusicShareSegmentBase
     {
     }
 
-    internal XiamiMusicShareSegment(MusicSharePayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal XiamiMusicShareSegment(MusicSharePayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }

@@ -43,10 +43,10 @@ public abstract class PredefinedMusicShareSegmentBase : MusicShareSegmentBase
         };
     }
 
-    internal PredefinedMusicShareSegmentBase(MusicSharePayload payload, JsonNode payloadNode)
+    internal PredefinedMusicShareSegmentBase(MusicSharePayload payload, JsonNode? payloadNode)
     {
         _musicShareType = payload.Type;
         MusicId = payload.Id;
-        _payload = payloadNode;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

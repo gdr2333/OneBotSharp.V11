@@ -78,7 +78,7 @@ public class RecordSegment : Segment
         UseCache = useCache;
         UseProxy = useProxy;
         Timeout = timeout;
-        FileAddress = System.IO.File.Exists(fileAddress) ? fileAddress : null;
+        FileAddress = File.Exists(fileAddress) ? fileAddress : null;
         JsonObject payload = new()
         {
             {"file", FileName}
@@ -119,7 +119,7 @@ public class RecordSegment : Segment
     }
 
 
-    internal RecordSegment(RecordPayload payload, JsonNode payloadNode, string? fileAddress = null)
+    internal RecordSegment(RecordPayload payload, JsonNode? payloadNode, string? fileAddress = null)
     {
         FileName = payload.File;
         UseMagic = payload.UseMagic;
@@ -127,7 +127,7 @@ public class RecordSegment : Segment
         UseCache = payload.UseCache;
         UseProxy = payload.UseProxy;
         Timeout = payload.TimeOut;
-        FileAddress = System.IO.File.Exists(fileAddress) ? fileAddress : null;
-        _payload = payloadNode;
+        FileAddress = File.Exists(fileAddress) ? fileAddress : null;
+        _payload = payloadNode ?? JsonValue.Create(payload) ?? throw new JsonException("JsonValue.Create出现内部错误");
     }
 }

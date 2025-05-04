@@ -30,8 +30,8 @@ public class DiceSegment : Segment
     {
     }
 
-    internal DiceSegment(JsonNode payloadNode)
+    internal DiceSegment(JsonNode? payloadNode)
     {
-        _payload = payloadNode;
+        _payload = payloadNode ?? new JsonObject();
     }
 }

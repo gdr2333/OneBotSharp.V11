@@ -16,7 +16,7 @@ public class ContactQqSegment : ContactSegmentBase
     {
     }
 
-    internal ContactQqSegment(ContactPayload payload, JsonNode payloadNode) : base(payload, payloadNode)
+    internal ContactQqSegment(ContactPayload payload, JsonNode? payloadNode) : base(payload, payloadNode)
     {
     }
 }
