@@ -32,7 +32,6 @@ public class ImageSegment : Segment
     /// 图片URL（仅限接收）
     /// </summary>
     [JsonIgnore]
-    [Obsolete("使用GetImageAsync来获取图片内容。")]
     public Uri? Url { get; private init; }
 
     /// <summary>
@@ -53,16 +52,7 @@ public class ImageSegment : Segment
     [JsonIgnore]
     public int? Timeout { get; private init; }
 
-    /// <summary>
-    /// 异步获取图片内容（仅限接收）
-    /// </summary>
-    /// <returns>图片内容（当不可用时返回null）</returns>
-    public async Task<byte[]?> GetImageAsync() =>
-        _getImage is null ? null : await _getImage();
-
     private readonly JsonNode _payload;
-
-    private readonly Func<Task<byte[]>>? _getImage;
 
     /// <summary>
     /// 创建新的图片消息段
@@ -76,9 +66,7 @@ public class ImageSegment : Segment
     {
         FileName = fileName;
         IsFlash = isFlash;
-#pragma warning disable CS0618
         Url = null;
-#pragma warning restore CS0618
         UseCache = useCache;
         UseProxy = useProxy;
         Timeout = timeout;
@@ -95,7 +83,6 @@ public class ImageSegment : Segment
         if (timeout is not null)
             payload.Add("timeout", timeout);
         _payload = payload;
-        _getImage = null;
     }
 
     /// <summary>
@@ -121,7 +108,7 @@ public class ImageSegment : Segment
     {
     }
 
-    internal ImageSegment(ImagePayload payload, JsonNode payloadNode, Func<Task<byte[]>> getImageFunc)
+    internal ImageSegment(ImagePayload payload, JsonNode payloadNode)
     {
         FileName = payload.File;
         IsFlash = payload.ImageType == "flash";
@@ -132,6 +119,5 @@ public class ImageSegment : Segment
         UseProxy = Defaults.CqUseProxyDefault;
         Timeout = null;
         _payload = payloadNode;
-        _getImage = getImageFunc;
     }
 }
