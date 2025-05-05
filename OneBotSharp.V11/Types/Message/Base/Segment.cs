@@ -1,4 +1,5 @@
 ﻿using OneBotSharp.V11.Types.Message.Payload;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OneBotSharp.V11.Types.Message.Base;
 
@@ -89,18 +90,15 @@ public abstract class Segment
                 case "reply":
                     return new ReplySegment(dat.GetValue<IdOnlyPayload>(), dat);
                 case "forward":
-#warning NOT DONE : FORWARD MESSAGE
-                    throw new NotImplementedException();
+                    return new ForwardSegment(dat.GetValue<IdOnlyPayload>(), dat);
                 case "node":
-#warning NOT DONE : MESSAGE NODE
-                    throw new NotImplementedException();
+                    return new CustomNodeSegment(dat.GetValue<CustomNodePayload>(), dat);
                 case "xml":
                     return new XmlSegment(dat.GetValue<DataOnlyPayload>(), dat);
                 case "json":
                     return new JsonSegment(dat.GetValue<DataOnlyPayload>(), dat);
                 default:
-#warning NOT DONE : UNKNOW SEGMENT
-                    throw new NotImplementedException();
+                    return new UnknowSegment(typ.GetValue<string>(), dat);
             }
         else
             throw new ArgumentException($"{nameof(data)}：内容无效！");
@@ -172,18 +170,16 @@ public abstract class Segment
             case "reply":
                 return new ReplySegment(IdOnlyPayload.Create(data), null);
             case "forward":
-#warning NOT DONE : FORWARD MESSAGE
-                throw new NotImplementedException();
+                return new ForwardSegment(IdOnlyPayload.Create(data), null);
             case "node":
-#warning NOT DONE : MESSAGE NODE
+                return new CustomNodeSegment(CustomNodePayload.Create(data), null);
                 throw new NotImplementedException();
             case "xml":
                 return new XmlSegment(DataOnlyPayload.Create(data), null);
             case "json":
                 return new JsonSegment(DataOnlyPayload.Create(data), null);
             default:
-#warning NOT DONE : UNKNOW SEGMENT
-                throw new NotImplementedException();
+                return new UnknowSegment(data);
         }
     }
 }
