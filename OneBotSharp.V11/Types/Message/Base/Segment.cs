@@ -17,7 +17,7 @@ public abstract class Segment
     /// </summary>
     public abstract JsonNode Payload { get; }
 
-    internal static Segment? AutoInit(JsonNode data)
+    internal static Segment AutoInit(JsonNode data)
     {
         var typ = data["type"];
         var dat = data["data"];
@@ -25,7 +25,7 @@ public abstract class Segment
             switch (typ.GetValue<string>())
             {
                 case null:
-                    return null;
+                    throw new ArgumentNullException($"{nameof(data)}：JSON NULL！");
                 case "text":
                     return new TextSegment(dat.GetValue<TextPayload>(), dat);
                 case "face":
@@ -85,7 +85,7 @@ public abstract class Segment
 #pragma warning restore CS0618
                         }
                     else
-                        return null;
+                        throw new ArgumentException($"{nameof(data)}：Music消息段不包含Type！");
                 case "reply":
                     return new ReplySegment(dat.GetValue<IdOnlyPayload>(), dat);
                 case "forward":
@@ -100,18 +100,16 @@ public abstract class Segment
                     return new JsonSegment(dat.GetValue<DataOnlyPayload>(), dat);
                 default:
 #warning NOT DONE : UNKNOW SEGMENT
-                    return null;
+                    throw new NotImplementedException();
             }
         else
-            return null;
+            throw new ArgumentException($"{nameof(data)}：内容无效！");
     }
 
-    internal static Segment? AutoInit(CqCode data)
+    internal static Segment AutoInit(CqCode data)
     {
         switch (data.Type)
         {
-            case null:
-                return null;
             case "text":
                 return new TextSegment(TextPayload.Create(data), null);
             case "face":
@@ -170,7 +168,7 @@ public abstract class Segment
 #pragma warning restore CS0618
                     }
                 else
-                    return null;
+                    throw new ArgumentException($"{nameof(data)}：Music消息段不包含Type！");
             case "reply":
                 return new ReplySegment(IdOnlyPayload.Create(data), null);
             case "forward":
@@ -185,7 +183,7 @@ public abstract class Segment
                 return new JsonSegment(DataOnlyPayload.Create(data), null);
             default:
 #warning NOT DONE : UNKNOW SEGMENT
-                return null;
+                throw new NotImplementedException();
         }
     }
 }
