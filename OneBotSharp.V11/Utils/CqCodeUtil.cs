@@ -1,4 +1,4 @@
-﻿using OneBotSharp.V11.Message.Base;
+﻿using OneBotSharp.V11.Messages.Base;
 
 namespace OneBotSharp.V11.Utils;
 
